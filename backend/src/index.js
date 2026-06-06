@@ -3,6 +3,9 @@ import { databaseInitialize } from "./db/sequelize.js";
 import { getEnvVar } from "./util/getEnvVar.js";
 import cors from "cors";
 import { Product } from "./db/models/Product.js";
+import { errorHandler } from "./middlewares/errorHandler.js";
+import { notFoundHandler } from "./middlewares/notFoundHandler.js";
+import productsRoutes from "./routes/productsRoutes.js";
 
 const app = express();
 
@@ -19,6 +22,10 @@ async function startServer(req, res) {
     console.error("Failed to connect to the server. Database Initialize error");
   }
 }
+app.use("/api/products", productsRoutes);
+
+app.use(errorHandler);
+app.use(notFoundHandler);
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT} `);
