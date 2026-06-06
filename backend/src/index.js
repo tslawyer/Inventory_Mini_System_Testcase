@@ -1,0 +1,27 @@
+import express from "express";
+import { databaseInitialize } from "./db/sequelize.js";
+import { getEnvVar } from "./util/getEnvVar.js";
+import cors from "cors";
+import { Product } from "./db/models/Product.js";
+
+const app = express();
+
+app.use(express.json());
+app.use(cors());
+
+const PORT = Number(getEnvVar("PORT", 3000));
+
+async function startServer(req, res) {
+  try {
+    await databaseInitialize();
+    console.log("Database connected successfully");
+  } catch (error) {
+    console.error("Failed to connect to the server. Database Initialize error");
+  }
+}
+
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT} `);
+});
+
+startServer();
