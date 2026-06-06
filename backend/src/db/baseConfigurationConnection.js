@@ -1,17 +1,18 @@
 import { getEnvVar } from "../util/getEnvVar.js";
 
-const dbHost = getEnvVar("DB_HOST");
-const dbName = getEnvVar("DB_NAME");
-const dbPort = getEnvVar("DB_PORT");
-const dbDialect = getEnvVar("DB_DIALECT", "postgres");
-const dbPassword = getEnvVar("DB_PASSWORD");
-const dbUser = getEnvVar("DB_USER");
+const dbHost = process.env.DB_HOST;
+const dbName = process.env.DB_NAME;
+const dbPort = process.env.DB_PORT || 5432;
+const dbDialect = process.env.DB_DIALECT || "postgres";
+const dbPassword = process.env.DB_PASSWORD;
+const dbUser = process.env.DB_USER;
 
 export const baseConfig = {
   dialect: dbDialect,
   username: dbUser,
-  port: dbPort,
+  port: parseInt(dbPort),
   host: dbHost,
   password: dbPassword,
   database: dbName,
+  logging: false,
 };
