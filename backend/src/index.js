@@ -12,7 +12,7 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-const PORT = Number(getEnvVar("PORT", 3000));
+const PORT = Number(getEnvVar("PORT", 4000));
 
 async function startServer(req, res) {
   try {

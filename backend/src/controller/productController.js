@@ -29,6 +29,14 @@ export const createProduct = asyncHandler(async (req, res) => {
       errors,
     });
   }
+
+  if (payload.quantity === 0) {
+    payload.status = "out_of_stock";
+  } else if (payload.quantity < 5) {
+    payload.status = "low_stock";
+  } else {
+    payload.status = "in_stock";
+  }
   const product = await Product.create(payload);
 
   res.status(201).json(product);
@@ -63,6 +71,13 @@ export const patchProduct = asyncHandler(async (req, res) => {
     throw createHttpError(400, "Validation failed", {
       errors,
     });
+  }
+  if (req.body.quantity === 0) {
+    req.body.status = "out_of_stock";
+  } else if (req.body.quantity < 5) {
+    req.body.status = "low_stock";
+  } else {
+    req.body.status = "in_stock";
   }
 
   await product.update(req.body);
