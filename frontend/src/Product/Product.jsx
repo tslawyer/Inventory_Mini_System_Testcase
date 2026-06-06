@@ -1,6 +1,6 @@
 import css from "../Product/Product.module.css";
 
-const Product = ({ product, onDelete }) => {
+const Product = ({ product, onDelete, onEdit }) => {
   const status =
     product.quantity === 0
       ? "out_of_stock"
@@ -14,6 +14,12 @@ const Product = ({ product, onDelete }) => {
       <p>Price: {product.price}</p>
       <p>Status: {status}</p>
       <button onClick={() => onDelete(product.id)}>Delete</button>
+      <button
+        onClick={() => onEdit(product)}
+        style={{ marginLeft: "10px", cursor: "pointer" }}
+      >
+        Edit
+      </button>
     </li>
   );
 };
